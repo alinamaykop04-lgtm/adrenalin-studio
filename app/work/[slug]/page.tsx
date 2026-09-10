@@ -1,0 +1,4 @@
+import {notFound} from 'next/navigation';
+import {projects} from '@/data/projects';
+export function generateStaticParams(){return projects.map(p=>({slug:p.slug}))}
+export default async function ProjectPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params; const p=projects.find(x=>x.slug===slug); if(!p) notFound(); return <main><section className="projectHero"><div className="meta"><span>{p.categories.join(' / ')}</span><span>{p.year}</span></div><h1 className="projectTitle">{p.title}</h1><p className="projectIntro">{p.intro}</p></section><div className="projectCanvas"/><section className="sections"><h3>Case study</h3><div className="blocks"><div className="block">01 — Context / Task</div><div className="block">02 — Process / Research / Sketches</div><div className="block">03 — Final Result</div><div className="block">04 — Project Details / Credits</div></div></section></main>}
