@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADRENALIN STUDIO — Camera Study 01</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0c0f10;color:#eceeeb;font:13px Arial,sans-serif}a{color:inherit;text-decoration:none}
+#run{height:650svh}#stage{position:sticky;top:0;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 47%,#292d30,#090b0d 78%);isolation:isolate}
+#stage:after{content:"";position:absolute;inset:0;z-index:12;pointer-events:none;background:radial-gradient(ellipse at center,transparent 28%,#0006 100%)}
+#world{position:absolute;inset:0;perspective:1150px;perspective-origin:50% 46%;z-index:5;pointer-events:none}
+#rig{position:absolute;left:50%;top:53%;transform-style:preserve-3d;will-change:transform;filter:drop-shadow(12px 15px 25px #0008)}
+#can{position:absolute;transform-style:preserve-3d}#can .side{position:absolute;left:-11px;top:-185px;width:22px;height:370px;backface-visibility:hidden;background:linear-gradient(#1d2022,#0a0c0d 25%,#111315 70%,#767c7e);border-left:1px solid #fff1}
+#can .top{position:absolute;width:208px;height:208px;left:-104px;top:-186px;border-radius:50%;border:5px solid #919998;background:radial-gradient(circle,#161c1e 0 27%,#818b8b 28%,#141819 43%,#545c5b 57%,#151a1c 70%,#87908e 82%);transform:rotateX(90deg)}
+#can .rim{position:absolute;left:-109px;width:218px;height:18px;border-radius:50%;background:linear-gradient(95deg,#323b40,#bdc1ba 27%,#232729 57%,#868c8a 82%,#262b2e);box-shadow:0 0 4px #000}
+#can .rim.upper{top:-191px}#can .rim.lower{top:186px}
+#can .shoulder{position:absolute;top:-221px;left:-91px;width:182px;height:55px;border-radius:48% 48% 21% 21%;background:linear-gradient(90deg,#1b2021,#777e7d 19%,#25292b 48%,#0c1011 81%)}
+#can .nozzle{position:absolute;left:-34px;top:-254px;width:68px;height:71px;border:1px solid #575e60;border-radius:12px 12px 5px 5px;background:linear-gradient(90deg,#101415,#383d3e 29%,#141719 71%,#080a0b)}
+#can .nozzle:after{content:"";position:absolute;top:15px;left:22px;width:19px;height:19px;border:3px solid #2b3435;border-radius:50%;background:radial-gradient(circle,#040606 30%,#9da5a0 40%,#161b1c 58%)}
+#can .mark{position:absolute;left:-95px;top:-125px;width:190px;height:220px;transform:translateZ(108px);display:grid;place-items:center;color:#ccd0ce70;letter-spacing:.2em;font-size:12px;writing-mode:vertical-rl}
+#hand{position:absolute;left:50%;top:48%;width:380px;height:240px;z-index:6;opacity:0;pointer-events:none;filter:drop-shadow(0 6px 16px #0008);will-change:opacity,transform}
+#hand svg{width:100%;height:100%;overflow:visible}#hand path{fill:url(#flesh);stroke:#a47662;stroke-width:2}
+#location{position:absolute;inset:0;z-index:1;opacity:0;background:radial-gradient(ellipse at 80% 50%,#165675,#132d3a 45%,#0b151a 88%);will-change:opacity}
+#location:after{content:"";position:absolute;inset:-30% 4% -30% 54%;transform:skew(-11deg);background:repeating-linear-gradient(145deg,#0d2939 0 35px,#1b637f 35px 59px,#0c2434 59px 110px);opacity:.66;filter:blur(4px)}
+#photo{position:absolute;inset:0;z-index:2;opacity:0;overflow:hidden;will-change:opacity}#photo img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform-origin:66% 45%;will-change:transform}
+#photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0008,transparent 60%),linear-gradient(0deg,#0007,transparent 40%)}
+#shoulder{position:absolute;z-index:3;inset:0;opacity:0;pointer-events:none;background:linear-gradient(110deg,#101619c7 0 27%,transparent 60%)}
+#shoulder:after{content:"";position:absolute;left:12%;bottom:-20%;width:38vw;height:85vh;border-radius:50%;background:linear-gradient(110deg,#152027,#3d4b4b 45%,#11191e);filter:blur(14px);transform:rotate(-25deg)}
+header{position:absolute;z-index:20;top:28px;left:4vw;right:4vw;display:flex;justify-content:space-between;align-items:start;gap:10px;text-transform:uppercase;letter-spacing:.16em}
+header strong{font-size:13px;letter-spacing:-.01em}header small{display:block;font-size:9px;margin-top:8px;color:#b9c0c0}header nav{font-size:10px;opacity:.8}
+#big{position:absolute;left:4vw;bottom:15vh;z-index:15;font-size:clamp(56px,9vw,146px);font-weight:900;line-height:.8;letter-spacing:-.09em;opacity:0;pointer-events:none}
+#tag{position:absolute;left:4vw;bottom:7vh;z-index:15;text-transform:uppercase;line-height:1.6;letter-spacing:.1em;font-size:11px;opacity:0;pointer-events:none}
+#hud{position:absolute;z-index:20;bottom:30px;left:4vw;right:4vw;display:flex;justify-content:space-between;align-items:end;pointer-events:none;text-transform:uppercase;font-size:10px;letter-spacing:.16em}
+#desc{margin-top:11px;color:#cbd4d5}#bar{margin-top:12px;width:160px;height:2px;background:#fff4}#fill{height:100%;background:#d8f6fa;width:0}
+#next{background:#ebe8e1;color:#121618;min-height:70svh;padding:15vh 6vw}#next h2{margin:24px 0;font-size:clamp(55px,11vw,160px);line-height:.79;letter-spacing:-.085em}#next p{max-width:600px;line-height:1.5}
+@media(max-width:720px){header{top:20px}header strong{font-size:11px}header nav{font-size:9px}#hand{width:260px;height:160px}#big{font-size:16vw;bottom:15vh}#tag{bottom:8vh}#bar{width:105px}#desc{max-width:190px}}
+@media(prefers-reduced-motion:reduce){#run{height:240svh}}
+</style></head><body>
+<section id="run"><div id="stage">
+<div id="location"></div><div id="photo"><img src="/hero-adrenalin.webp" alt="Художница у мурала с баллончиком на лестнице"></div><div id="shoulder"></div>
+<div id="world"><div id="rig"><div id="can"><div class="shoulder"></div><div class="rim upper"></div><div class="rim lower"></div><div class="top"></div><div class="nozzle"></div><div class="mark">ADRENALIN</div></div></div></div>
+<div id="hand"><svg viewBox="0 0 380 240" aria-hidden="true"><defs><linearGradient id="flesh"><stop stop-color="#d7a88e"/><stop offset=".52" stop-color="#b78069"/><stop offset="1" stop-color="#5c4841"/></linearGradient></defs><path d="M380 130 C330 121 295 111 254 109 C228 99 220 82 207 63 C195 43 178 34 171 47 C167 56 184 81 190 91 C152 77 128 79 124 94 C120 109 147 118 163 127 C139 131 124 140 132 151 C142 166 169 161 190 157 C179 167 181 180 195 185 C217 190 241 172 259 167 C302 165 329 184 380 191 Z"/><path d="M183 69 C171 46 155 26 146 34 C139 41 155 71 176 103 L195 127"/></svg></div>
+<header><div><strong>ADRENALIN STUDIO</strong><small>CAMERA STUDY / 01</small></div><nav><span>SCROLL TO DIRECT &nbsp;·&nbsp; </span><a href="/">MAIN SITE ↗</a></nav></header>
+<div id="big">ADRENALIN<br>STUDIO</div><div id="tag">Independent visual artist<br>Murals · Art direction · Digital<br>2014—2026</div>
+<div id="hud"><div><div id="count">01 / 06</div><div id="desc">Баллончик / фронтально</div></div><div><div>SCROLL ↓</div><div id="bar"><div id="fill"></div></div></div></div>
+</div></section>
+<section id="next"><small>AFTER THE CAMERA MOVE / PLACEHOLDER</small><h2>ART IN<br>SPACE.</h2><p>После финальной фотографии начинается галерея работ. Следующий экран пока не разрабатываем.</p><a href="/">← На основной сайт</a></section>
+<script>
+(()=>{
+const $=s=>document.getElementById(s),rig=$('rig'),can=$('can'),hand=$('hand'),loc=$('location'),photo=$('photo'),img=photo.querySelector('img'),sh=$('shoulder'),big=$('big'),tag=$('tag'),count=$('count'),desc=$('desc'),fill=$('fill'),run=$('run');
+for(let i=0;i<30;i++){let e=document.createElement('div');e.className='side';let a=i*12;e.style.transform='rotateY('+a+'deg) translateZ(107px)';e.style.filter='brightness('+(.22+.9*Math.pow(Math.max(0,Math.cos((a-52)*Math.PI/180)),5))+')';can.prepend(e)}
+const min=(v)=>Math.max(0,Math.min(1,v)),smooth=(a,b,x)=>{let t=min((x-a)/(b-a));return t*t*(3-2*t)},val=(p,pts)=>{for(let i=0;i<pts.length-1;i++)if(p<=pts[i+1][0]){const a=pts[i],b=pts[i+1];return a[1]+(b[1]-a[1])*smooth(a[0],b[0],p)}return pts.at(-1)[1]},stages=['Баллончик / фронтально','Облёт сверху','Рука берёт баллончик','Поворот камеры','Отлёт вдоль руки','Финальная фотография'];
+let rAF=0;
+function render(){rAF=0;let rect=run.getBoundingClientRect(),p=min(-rect.top/Math.max(1,rect.height-innerHeight));
+let rx=val(p,[[0,0],[.15,0],[.35,70],[.45,62],[.63,5],[.78,-16],[1,-16]]),ry=val(p,[[0,0],[.15,0],[.35,17],[.47,10],[.64,-29],[.79,-15],[1,-15]]),rz=val(p,[[0,0],[.4,0],[.65,-18],[.76,-12],[1,-12]]),zoom=val(p,[[0,.86],[.15,.86],[.35,1.32],[.52,1.45],[.72,1.20],[.84,.82],[1,.82]]);
+rig.style.transform='translate3d('+val(p,[[0,0],[.35,0],[.56,-18],[.75,90],[.9,185],[1,185]])+'px,'+val(p,[[0,0],[.33,0],[.57,12],[.76,45],[.9,83],[1,83]])+'px,0) rotateZ('+rz+'deg) rotateY('+ry+'deg) rotateX('+rx+'deg) scale('+zoom+')';
+can.style.transform='rotateZ('+val(p,[[0,0],[.45,0],[.6,-8],[.73,-16],[1,-16]])+'deg)';
+let handIn=smooth(.37,.45,p)*(1-smooth(.72,.83,p));hand.style.opacity=handIn;hand.style.transform='translate3d('+val(p,[[0,420],[.4,330],[.49,70],[.6,30],[.75,-190],[1,-190]])+'px,'+val(p,[[0,-170],[.48,-10],[.62,-34],[.8,100],[1,100]])+'px,0) rotate('+val(p,[[0,-22],[.49,-22],[.65,4],[1,4]])+'deg)';
+loc.style.opacity=smooth(.48,.65,p)*(1-smooth(.78,.9,p));sh.style.opacity=smooth(.61,.69,p)*(1-smooth(.82,.91,p));
+photo.style.opacity=smooth(.67,.88,p);img.style.transform='scale('+val(p,[[0,1.38],[.65,1.38],[.84,1.12],[1,1]])+')';
+rig.style.opacity=1-smooth(.69,.86,p);big.style.opacity=smooth(.85,.98,p);tag.style.opacity=smooth(.9,1,p);
+let idx=p<.16?0:p<.34?1:p<.5?2:p<.65?3:p<.86?4:5;count.textContent=String(idx+1).padStart(2,'0')+' / 06';desc.textContent=stages[idx];fill.style.width=(p*100)+'%';
+}
+const update=()=>{if(!rAF)rAF=requestAnimationFrame(render)};addEventListener('scroll',update,{passive:true});addEventListener('resize',update);render();
+})();
+</script></body></html>
